@@ -4,6 +4,7 @@ import notFoundHandler from "./handler/notFound.handler";
 import errorHandler from "./handler/error.handler";
 import mainRoutes from "./routes/main.routes";
 config();
+import "./config/db.config"
 
 export const fastify = Fastify({ logger: true });
 const PORT = Number(process.env.PORT) || 5200;
