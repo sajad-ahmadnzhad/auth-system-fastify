@@ -1,0 +1,16 @@
+{
+  "name": "auth-with-fastify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.ts"
+  },
+  "repository": "https://github.com/sajad-ahmadnzhad/auth-system-fastify.git",
+  "author": "'sajad' <143605677+sajad-ahmadnzhad@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^20.11.30",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.2"
+  }
+}
