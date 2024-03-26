@@ -3,7 +3,7 @@ import {
   FastifyPluginOptions,
   RouteShorthandOptions,
 } from "fastify";
-import {register} from "../handler/auth.handler";
+import { register } from "../handler/auth.handler";
 
 const registerSchema: RouteShorthandOptions = {
   schema: {
@@ -12,6 +12,7 @@ const registerSchema: RouteShorthandOptions = {
         type: "object",
         properties: {
           message: { type: "string" },
+          name: { type: "string" },
         },
         required: ["message"],
       },
