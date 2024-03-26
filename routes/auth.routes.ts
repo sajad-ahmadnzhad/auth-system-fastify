@@ -3,10 +3,20 @@ import {
   FastifyPluginOptions,
   RouteShorthandOptions,
 } from "fastify";
-import authHandler from "../handler/auth.handler";
+import {register} from "../handler/auth.handler";
 
 const registerSchema: RouteShorthandOptions = {
-  schema: {},
+  schema: {
+    response: {
+      200: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+        },
+        required: ["message"],
+      },
+    },
+  },
 };
 
 export default (
@@ -14,6 +24,6 @@ export default (
   options: FastifyPluginOptions,
   done: any
 ) => {
-  fastify.get("/register", registerSchema, authHandler);
+  fastify.get("/register", registerSchema, register);
   done();
 };

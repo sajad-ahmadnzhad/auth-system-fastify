@@ -1,3 +1,5 @@
-export default () => {
-  return "hello world";
+export let register =  () => {
+    return {
+      message: 'hello world'
+  }
 };
