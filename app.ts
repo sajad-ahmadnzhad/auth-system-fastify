@@ -6,10 +6,12 @@ import mainRoutes from "./routes/main.routes";
 import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from "@fastify/cookie";
 import fastifyBcrypt from "fastify-bcrypt";
+import fastifyMulter from "fastify-multer";
 config();
 import "./config/db.config";
+import './interfaces/app.interface'
 
-export const fastify = Fastify({ logger: true });
+const fastify = Fastify({ logger: true });
 const PORT = Number(process.env.PORT) || 5200;
 
 const start = async () => {
@@ -19,8 +21,11 @@ const start = async () => {
     fastify.log.error(error);
   }
 };
+
+fastify.register(fastifyMulter.contentParser);
 fastify.register(fastifyJwt, { secret: process.env.JWT_SECRET as string });
 fastify.register(fastifyCookie, { secret: process.env.COOKIE_SECRET });
+fastify.register(fastifyBcrypt, { saltWorkFactor: 12 });
 fastify.register(mainRoutes);
 fastify.setNotFoundHandler(notFoundHandler);
 fastify.setErrorHandler(errorHandler);

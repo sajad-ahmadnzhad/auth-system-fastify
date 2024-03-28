@@ -6,6 +6,9 @@ const userSchema = new Schema<UserModel>({
   username: { type: String, trim: true, lowercase: true, required: true },
   email: { type: String, trim: true, lowercase: true, required: true },
   password: { type: String, trim: true, lowercase: true, required: true },
+  isAdmin: { type: Boolean, default: false },
+  isSuperAdmin: { type: Boolean, default: false },
+  profile: { type: String, required: true },
 });
 
-export default model<UserModel>('user' , userSchema)
+export default model<UserModel>("user", userSchema);

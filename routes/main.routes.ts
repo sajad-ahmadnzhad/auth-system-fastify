@@ -6,6 +6,6 @@ export default (
   options: FastifyPluginOptions,
   done: any
 ): void => {
-  fastify.register(authRoutes, { prefix: "auth" });
+  fastify.register(authRoutes, { prefix: "v1/auth" });
   done();
 };
