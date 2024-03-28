@@ -1,7 +1,7 @@
-import { preValidationHookHandler } from "fastify";
-import { RegisterBody } from "../interfaces/auth.interface";
+import { FastifyReply, preValidationHookHandler } from "fastify";
+import { JWTPayload, RegisterBody } from "../interfaces/auth.interface";
 import httpErrors from "http-errors";
-
+import userModel from "../models/user.model";
 export const registerPerValidation: preValidationHookHandler = (
   req,
   reply,
@@ -18,8 +18,23 @@ export const registerPerValidation: preValidationHookHandler = (
   }
   done();
 };
+export const isAuth: preValidationHookHandler = async (req, reply , done) => {
+  const token = req.cookies.accessToken;
+  if (!token) {
+    throw httpErrors.Forbidden(
+      "This path is protected. To access it, you must log in first"
+    );
+  }
 
-export const isAuth: preValidationHookHandler = (req, reply, done) => {
-  console.log()
-  done();
+  const verifyToken = <JWTPayload>req.server.jwt.verify(token);
+
+  const user = await userModel.findById(verifyToken.id).select("-password");
+
+  if (!user) {
+    throw httpErrors.BadRequest("User not found");
+  }
+
+  req.user = user;
+
+  return req.server.log.info('done' , done)
 };

@@ -9,3 +9,7 @@ export interface LoginBody {
     identifier: string
     password: string
 }
+
+export interface JWTPayload {
+    id: string
+}

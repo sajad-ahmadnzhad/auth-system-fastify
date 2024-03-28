@@ -9,7 +9,7 @@ import fastifyBcrypt from "fastify-bcrypt";
 import fastifyMulter from "fastify-multer";
 config();
 import "./config/db.config";
-import './interfaces/app.interface'
+import "./interfaces/app.interface";
 
 const fastify = Fastify({ logger: true });
 const PORT = Number(process.env.PORT) || 5200;

@@ -37,7 +37,6 @@ export const registerHandler: RouteHandlerMethod = async (
   reply.setCookie("accessToken", accessToken, {
     secure: true,
     httpOnly: true,
-    signed: true,
     maxAge: twoMonths,
   });
 
@@ -68,13 +67,12 @@ export const loginHandler: RouteHandlerMethod = async (req, reply) => {
   reply.setCookie("accessToken", accessToken, {
     secure: true,
     httpOnly: true,
-    signed: true,
     maxAge: twoMonths,
   });
 
   reply.send({ message: "your logged in successful" });
 };
-export const logoutHandler: RouteHandlerMethod = async (req, reply) => {
-  reply.clearCookie("accessToken");
-  reply.send({message: 'logout was successful'})
+export const logoutHandler: RouteHandlerMethod = (req, reply) => {
+  reply.clearCookie("accessToken", { path: "/v1/auth" });
+  reply.send({ message: "logout was successful" });
 };

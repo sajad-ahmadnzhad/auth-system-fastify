@@ -25,7 +25,6 @@ export const registerOptions: RouteShorthandOptions = {
     },
   },
 } as const;
-
 export const loginOptions: RouteShorthandOptions = {
   schema: {
     body: {
@@ -47,6 +46,7 @@ export const loginOptions: RouteShorthandOptions = {
   },
 } as const;
 export const logoutOptions: RouteShorthandOptions = {
+  preHandler: isAuth,
   schema: {
     response: {
       200: {
@@ -57,4 +57,4 @@ export const logoutOptions: RouteShorthandOptions = {
       },
     },
   },
-};
+} as const
