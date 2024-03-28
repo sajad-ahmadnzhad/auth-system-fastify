@@ -30,7 +30,7 @@ export const loginOptions: RouteShorthandOptions = {
   schema: {
     body: {
       type: "object",
-      required: ['identifier' , 'password'],
+      required: ["identifier", "password"],
       properties: {
         identifier: { type: "string" },
         password: { type: "string" },
@@ -46,3 +46,15 @@ export const loginOptions: RouteShorthandOptions = {
     },
   },
 } as const;
+export const logoutOptions: RouteShorthandOptions = {
+  schema: {
+    response: {
+      200: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+        },
+      },
+    },
+  },
+};

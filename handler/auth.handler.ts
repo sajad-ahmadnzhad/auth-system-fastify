@@ -74,3 +74,7 @@ export const loginHandler: RouteHandlerMethod = async (req, reply) => {
 
   reply.send({ message: "your logged in successful" });
 };
+export const logoutHandler: RouteHandlerMethod = async (req, reply) => {
+  reply.clearCookie("accessToken");
+  reply.send({message: 'logout was successful'})
+};
