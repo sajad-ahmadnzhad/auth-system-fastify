@@ -25,3 +25,24 @@ export const registerOptions: RouteShorthandOptions = {
     },
   },
 } as const;
+
+export const loginOptions: RouteShorthandOptions = {
+  schema: {
+    body: {
+      type: "object",
+      required: ['identifier' , 'password'],
+      properties: {
+        identifier: { type: "string" },
+        password: { type: "string" },
+      },
+    },
+    response: {
+      201: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+        },
+      },
+    },
+  },
+} as const;

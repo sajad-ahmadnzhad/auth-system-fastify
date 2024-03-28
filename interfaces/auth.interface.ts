@@ -5,3 +5,7 @@ export interface RegisterBody {
     password: string
     confirmPassword: string
 }
+export interface LoginBody {
+    identifier: string
+    password: string
+}

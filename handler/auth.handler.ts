@@ -1,10 +1,10 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { RegisterBody } from "../interfaces/auth.interface";
+import { FastifyReply, FastifyRequest, RouteHandlerMethod } from "fastify";
+import { LoginBody, RegisterBody } from "../interfaces/auth.interface";
 import userModel from "../models/user.model";
 import httpErrors from "http-errors";
-export let registerHandler = async (
-  req: FastifyRequest,
-  reply: FastifyReply
+export const registerHandler: RouteHandlerMethod = async (
+  req,
+  reply
 ): Promise<void> => {
   const body = <RegisterBody>req.body;
 
@@ -42,4 +42,35 @@ export let registerHandler = async (
   });
 
   reply.code(201).send({ message: "Registered was successful" });
+};
+export const loginHandler: RouteHandlerMethod = async (req, reply) => {
+  const { identifier, password } = <LoginBody>req.body;
+  const user = await userModel.findOne({
+    $or: [{ username: identifier }, { email: identifier }],
+  });
+
+  if (!user) {
+    throw httpErrors.NotFound("User not found");
+  }
+
+  const comparePassword = req.server.bcrypt.compare(password, user.password);
+
+  if (!comparePassword) {
+    throw httpErrors.BadRequest("password is not valid");
+  }
+
+  const accessToken = req.server.jwt.sign(
+    { id: user._id },
+    { expiresIn: "30d" }
+  );
+
+  const twoMonths = 60 * 60 * 24 * 60 * 1000;
+  reply.setCookie("accessToken", accessToken, {
+    secure: true,
+    httpOnly: true,
+    signed: true,
+    maxAge: twoMonths,
+  });
+
+  reply.send({ message: "your logged in successful" });
 };
