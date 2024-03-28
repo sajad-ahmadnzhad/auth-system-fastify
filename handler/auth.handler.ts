@@ -1,4 +1,4 @@
-import { FastifyReply, FastifyRequest, RouteHandlerMethod } from "fastify";
+import { RouteHandlerMethod } from "fastify";
 import { LoginBody, RegisterBody } from "../interfaces/auth.interface";
 import userModel from "../models/user.model";
 import httpErrors from "http-errors";
