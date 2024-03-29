@@ -4,7 +4,7 @@ import { isValidObjectId } from "mongoose";
 import httpErrors from "http-errors";
 import userModel from "../models/user.model";
 
-export const changeRoleValidation: any = async (
+export const changeRoleValidator: any = async (
   req: FastifyRequest<{ Params: ChangeRoleParams }>,
   reply: FastifyReply
 ): Promise<void> => {

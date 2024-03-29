@@ -1,8 +1,9 @@
 import { RouteShorthandOptions } from "fastify";
-import { isAuthMiddleware, registerPerValidation } from "../middleware/auth.middleware";
+import { isAuthMiddleware } from "../middleware/auth.middleware";
+import {registerValidator} from '../validator/auth.validator'
 import profileUploader from "../utils/uploader/profile.uploader";
 export const registerOptions: RouteShorthandOptions = {
-  preValidation: [profileUploader.single("profile"), registerPerValidation],
+  preValidation: [profileUploader.single("profile"), registerValidator],
   schema: {
     body: {
       type: "object",

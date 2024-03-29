@@ -1,7 +1,7 @@
 import { RouteShorthandOptions } from "fastify";
 import { isAuthMiddleware } from "../middleware/auth.middleware";
 import profileUploader from "../utils/uploader/profile.uploader";
-import { changeRoleValidation } from "../middleware/user.middleware";
+import { changeRoleValidator } from "../validator/user.validator";
 import isSuperAdminMiddlewares from "../middleware/isSuperAdmin.middlewares";
 
 export const myAccountOptions: RouteShorthandOptions = {
@@ -68,7 +68,7 @@ export const deleteAccountOptions: RouteShorthandOptions = {
   },
 } as const;
 export const changeRoleOptions: RouteShorthandOptions = {
-  preHandler: [isAuthMiddleware , isSuperAdminMiddlewares , changeRoleValidation],
+  preHandler: [isAuthMiddleware , isSuperAdminMiddlewares , changeRoleValidator],
   schema: {
     response: {
       200: {
