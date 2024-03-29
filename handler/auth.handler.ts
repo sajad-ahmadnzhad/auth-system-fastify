@@ -19,8 +19,8 @@ export const registerHandler: RouteHandlerMethod = async (
   }
 
   const profile = req.file
-    ? `/public/usersProfile/${req.file.filename}`
-    : "/public/usersProfile/customProfile.png";
+    ? `/usersProfile/${req.file.filename}`
+    : "/usersProfile/customProfile.png";
 
   const hashPassword = await req.bcryptHash(body.password);
   const countUsers = await userModel.countDocuments();
@@ -68,7 +68,7 @@ export const loginHandler: RouteHandlerMethod = async (req, reply) => {
     secure: true,
     httpOnly: true,
     maxAge: twoMonths,
-    path: '/'
+    path: "/",
   });
 
   reply.send({ message: "your logged in successful" });

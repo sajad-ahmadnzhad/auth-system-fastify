@@ -23,6 +23,7 @@
     "http-errors": "^2.0.0",
     "json-schema-to-ts": "^3.0.1",
     "mongoose": "^8.2.3",
-    "nodemailer": "^6.9.13"
+    "nodemailer": "^6.9.13",
+    "rimraf": "^5.0.5"
   }
 }
