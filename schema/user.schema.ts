@@ -1,5 +1,6 @@
 import { RouteShorthandOptions } from "fastify";
 import { isAuth } from "../middleware/auth.middleware";
+import profileUploader from "../utils/uploader/profile.uploader";
 
 export const myAccountOptions: RouteShorthandOptions = {
   preHandler: isAuth,
@@ -19,3 +20,25 @@ export const myAccountOptions: RouteShorthandOptions = {
     },
   },
 } as const;
+export const updateOptions: RouteShorthandOptions = {
+  preValidation: [isAuth, profileUploader.single("profile")],
+  schema: {
+    body: {
+      type: "object",
+      properties: {
+        name: { type: "string" },
+        username: { type: "string" },
+        email: { type: "string" },
+        password: { type: "string" },
+      },
+    },
+    response: {
+      200: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+        },
+      },
+    },
+  },
+};
