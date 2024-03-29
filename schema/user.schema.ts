@@ -1,9 +1,11 @@
 import { RouteShorthandOptions } from "fastify";
-import { isAuth } from "../middleware/auth.middleware";
+import { isAuthMiddleware } from "../middleware/auth.middleware";
 import profileUploader from "../utils/uploader/profile.uploader";
+import { changeRoleValidation } from "../middleware/user.middleware";
+import isSuperAdminMiddlewares from "../middleware/isSuperAdmin.middlewares";
 
 export const myAccountOptions: RouteShorthandOptions = {
-  preHandler: isAuth,
+  preHandler: isAuthMiddleware,
   schema: {
     response: {
       200: {
@@ -21,7 +23,7 @@ export const myAccountOptions: RouteShorthandOptions = {
   },
 } as const;
 export const updateOptions: RouteShorthandOptions = {
-  preValidation: [isAuth, profileUploader.single("profile")],
+  preValidation: [isAuthMiddleware, profileUploader.single("profile")],
   schema: {
     body: {
       type: "object",
@@ -45,7 +47,7 @@ export const updateOptions: RouteShorthandOptions = {
   },
 } as const;
 export const deleteAccountOptions: RouteShorthandOptions = {
-  preHandler: isAuth ,
+  preHandler: isAuthMiddleware,
   schema: {
     body: {
       type: "object",
@@ -63,5 +65,26 @@ export const deleteAccountOptions: RouteShorthandOptions = {
         },
       },
     },
+  },
+} as const;
+export const changeRoleOptions: RouteShorthandOptions = {
+  preHandler: [isAuthMiddleware , isSuperAdminMiddlewares , changeRoleValidation],
+  schema: {
+    response: {
+      200: {
+        type: "object",
+        required: ["message"],
+        properties: {
+          message: { type: "string" },
+        },
+      },
+    },
+    params: {
+      type: 'object',
+      required: ['id'],
+      properties: {
+        id: {type: 'string'}
+      }
+    }
   },
 } as const;

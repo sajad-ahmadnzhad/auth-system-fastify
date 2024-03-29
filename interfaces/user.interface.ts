@@ -22,3 +22,7 @@ export interface User extends Omit<UserModel, "password"> {
 export interface DeleteAccountBody {
   password: string;
 }
+
+export interface ChangeRoleParams {
+  id: string
+}

@@ -1,5 +1,6 @@
-import { RouteHandlerMethod } from "fastify";
+import { FastifyReply, FastifyRequest, RouteHandlerMethod } from "fastify";
 import {
+  ChangeRoleParams,
   DeleteAccountBody,
   UpdateBody,
   User,
@@ -49,7 +50,26 @@ export const deleteAccountHandler: RouteHandlerMethod = async (req, reply) => {
   }
 
   await foundUser?.deleteOne();
-  reply.clearCookie("accessToken" , {path: '/'});
+  reply.clearCookie("accessToken", { path: "/" });
 
   reply.send({ message: "Deleted account successfully" });
+};
+export const changeRoleHandler = async (
+  req: FastifyRequest<{ Params: ChangeRoleParams }>,
+  reply: FastifyReply
+) => {
+  const { id } = req.params;
+
+  const user = await userModel.findById(id);
+
+  const newRole = await userModel.findByIdAndUpdate(
+    id,
+    { isAdmin: !user!.isAdmin },
+    { new: true }
+  );
+  reply.send({
+    message: `changed role to ${
+      newRole!.isAdmin ? "admin" : "user"
+    } successfully`,
+  });
 };

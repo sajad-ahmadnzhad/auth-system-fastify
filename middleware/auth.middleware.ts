@@ -18,7 +18,7 @@ export const registerPerValidation: preValidationHookHandler = (
   }
   done();
 };
-export const isAuth: preHandlerAsyncHookHandler = async (req, reply) => {
+export const isAuthMiddleware: preHandlerAsyncHookHandler = async (req, reply) => {
   const token = req.cookies.accessToken;
   if (!token) {
     throw httpErrors.Forbidden(
