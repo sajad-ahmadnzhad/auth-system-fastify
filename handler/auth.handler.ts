@@ -68,11 +68,12 @@ export const loginHandler: RouteHandlerMethod = async (req, reply) => {
     secure: true,
     httpOnly: true,
     maxAge: twoMonths,
+    path: '/'
   });
 
   reply.send({ message: "your logged in successful" });
 };
 export const logoutHandler: RouteHandlerMethod = (req, reply) => {
-  reply.clearCookie("accessToken", { path: "/v1/auth" });
+  reply.clearCookie("accessToken", { path: "/" });
   reply.send({ message: "logout was successful" });
 };

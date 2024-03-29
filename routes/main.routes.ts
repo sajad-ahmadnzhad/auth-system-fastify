@@ -1,11 +1,8 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
+import { FastifyInstance} from "fastify";
 import authRoutes from "./auth.routes";
+import userRoutes from "./user.routes";
 
-export default (
-  fastify: FastifyInstance,
-  options: FastifyPluginOptions,
-  done: any
-): void => {
+export default async (fastify: FastifyInstance): Promise<void> => {
   fastify.register(authRoutes, { prefix: "v1/auth" });
-  done();
+  fastify.register(userRoutes, { prefix: "v1/user" });
 };

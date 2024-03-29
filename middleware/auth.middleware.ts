@@ -1,4 +1,4 @@
-import { FastifyReply, preValidationHookHandler } from "fastify";
+import { preHandlerAsyncHookHandler, preValidationHookHandler } from "fastify";
 import { JWTPayload, RegisterBody } from "../interfaces/auth.interface";
 import httpErrors from "http-errors";
 import userModel from "../models/user.model";
@@ -18,7 +18,7 @@ export const registerPerValidation: preValidationHookHandler = (
   }
   done();
 };
-export const isAuth: preValidationHookHandler = async (req, reply , done) => {
+export const isAuth: preHandlerAsyncHookHandler = async (req, reply) => {
   const token = req.cookies.accessToken;
   if (!token) {
     throw httpErrors.Forbidden(
@@ -35,6 +35,4 @@ export const isAuth: preValidationHookHandler = async (req, reply , done) => {
   }
 
   req.user = user;
-
-  return req.server.log.info('done' , done)
 };
