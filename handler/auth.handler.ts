@@ -38,6 +38,7 @@ export const registerHandler: RouteHandlerMethod = async (
     secure: true,
     httpOnly: true,
     maxAge: twoMonths,
+    path: "/",
   });
 
   reply.code(201).send({ message: "Registered was successful" });
@@ -52,7 +53,10 @@ export const loginHandler: RouteHandlerMethod = async (req, reply) => {
     throw httpErrors.NotFound("User not found");
   }
 
-  const comparePassword = req.server.bcrypt.compare(password, user.password);
+  const comparePassword = await req.server.bcrypt.compare(
+    password,
+    user.password
+  );
 
   if (!comparePassword) {
     throw httpErrors.BadRequest("password is not valid");

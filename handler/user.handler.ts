@@ -1,8 +1,13 @@
 import { RouteHandlerMethod } from "fastify";
-import { UpdateBody, User } from "../interfaces/user.interface";
+import {
+  DeleteAccountBody,
+  UpdateBody,
+  User,
+} from "../interfaces/user.interface";
 import userModel from "../models/user.model";
 import path from "path";
 import { rimrafSync } from "rimraf";
+import httpErrors from "http-errors";
 
 export const myAccountHandler: RouteHandlerMethod = (req, reply) => {
   const user = <User>req.user;
@@ -24,4 +29,27 @@ export const updateHandler: RouteHandlerMethod = async (req, reply) => {
   });
 
   reply.send({ message: "Updated user successfully" });
+};
+export const deleteAccountHandler: RouteHandlerMethod = async (req, reply) => {
+  const body = <DeleteAccountBody>req.body;
+  const user = <User>req.user;
+
+  const foundUser = await userModel.findById(user._id);
+  const comparePassword = await req.bcryptCompare(
+    body.password,
+    foundUser!.password
+  );
+
+  if (!comparePassword) {
+    throw httpErrors.BadRequest("Password is not valid");
+  }
+
+  if (user.profile !== "customProfile.png") {
+    rimrafSync(path.join(process.cwd(), "public", user.profile));
+  }
+
+  await foundUser?.deleteOne();
+  reply.clearCookie("accessToken" , {path: '/'});
+
+  reply.send({ message: "Deleted account successfully" });
 };

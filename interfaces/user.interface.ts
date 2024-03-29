@@ -18,3 +18,7 @@ export interface UpdateBody {
 export interface User extends Omit<UserModel, "password"> {
   _id: ObjectId;
 }
+
+export interface DeleteAccountBody {
+  password: string;
+}

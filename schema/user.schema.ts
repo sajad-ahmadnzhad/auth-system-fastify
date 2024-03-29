@@ -30,7 +30,7 @@ export const updateOptions: RouteShorthandOptions = {
         name: { type: "string" },
         username: { type: "string" },
         email: { type: "string" },
-        password: { type: "string" , minLength: 8 },
+        password: { type: "string", minLength: 8 },
       },
     },
     response: {
@@ -43,4 +43,25 @@ export const updateOptions: RouteShorthandOptions = {
       },
     },
   },
-};
+} as const;
+export const deleteAccountOptions: RouteShorthandOptions = {
+  preHandler: isAuth ,
+  schema: {
+    body: {
+      type: "object",
+      required: ["password"],
+      properties: {
+        password: { type: "string" },
+      },
+    },
+    response: {
+      200: {
+        type: "object",
+        required: ["message"],
+        properties: {
+          message: { type: "string" },
+        },
+      },
+    },
+  },
+} as const;
