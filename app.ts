@@ -12,6 +12,7 @@ config();
 import "./config/db.config";
 import "./interfaces/app.interface";
 import path from "path";
+import mainPlugin from "./plugin/main.plugin";
 
 const fastify = Fastify({ logger: true });
 const PORT = Number(process.env.PORT) || 5200;
@@ -23,7 +24,9 @@ const start = async () => {
     fastify.log.error(error);
   }
 };
-fastify.register(fastifyStatic, {root: path.join(__dirname , 'public')})
+
+fastify.register(mainPlugin)
+fastify.register(fastifyStatic, { root: path.join(__dirname, "public") });
 fastify.register(fastifyMulter.contentParser);
 fastify.register(fastifyJwt, { secret: process.env.JWT_SECRET as string });
 fastify.register(fastifyCookie, { secret: process.env.COOKIE_SECRET });
