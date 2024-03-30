@@ -3,6 +3,7 @@ import authMiddleware from "../middleware/auth.middleware";
 import profileUploader from "../utils/uploader/profile.uploader";
 import { changeRoleValidator } from "../validator/user.validator";
 import isSuperAdminMiddlewares from "../middleware/isSuperAdmin.middlewares";
+import isAdminMiddleware from "../middleware/isAdmin.middleware";
 
 export const myAccountOptions: RouteShorthandOptions = {
   preHandler: authMiddleware,
@@ -88,3 +89,32 @@ export const changeRoleOptions: RouteShorthandOptions = {
     },
   },
 } as const;
+export const getAllOptions: RouteShorthandOptions = {
+  preHandler: [authMiddleware, isAdminMiddleware],
+  schema: {
+    response: {
+      200: {
+        type: "array",
+        items: {
+          type: "object",
+          required: [
+            "name",
+            "username",
+            "email",
+            "isAdmin",
+            "isSuperAdmin",
+            "profile",
+          ],
+          properties: {
+            name: { type: "string" },
+            username: { type: "string" },
+            email: { type: "string" },
+            isAdmin: { type: "boolean" },
+            isSuperAdmin: { type: "boolean" },
+            profile: { type: "string" },
+          },
+        },
+      },
+    },
+  },
+};

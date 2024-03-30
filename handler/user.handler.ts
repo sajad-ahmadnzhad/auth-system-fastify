@@ -73,3 +73,7 @@ export const changeRoleHandler = async (
     } successfully`,
   });
 };
+export const getAllHandler:RouteHandlerMethod = async (req , reply) => {
+  const allUsers = await userModel.find().lean()
+  reply.send(allUsers)
+}
