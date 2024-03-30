@@ -1,7 +1,7 @@
 import { RouteShorthandOptions } from "fastify";
 import authMiddleware from "../middleware/auth.middleware";
 import profileUploader from "../utils/uploader/profile.uploader";
-import { changeRoleValidator } from "../validator/user.validator";
+import { changeRoleValidator, deleteAccountValidator } from "../validator/user.validator";
 import isSuperAdminMiddlewares from "../middleware/isSuperAdmin.middlewares";
 import isAdminMiddleware from "../middleware/isAdmin.middleware";
 
@@ -48,7 +48,7 @@ export const updateOptions: RouteShorthandOptions = {
   },
 } as const;
 export const deleteAccountOptions: RouteShorthandOptions = {
-  preHandler: authMiddleware,
+  preHandler: [authMiddleware , deleteAccountValidator],
   schema: {
     body: {
       type: "object",
