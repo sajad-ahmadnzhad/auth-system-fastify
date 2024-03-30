@@ -73,7 +73,11 @@ export const changeRoleHandler = async (
     } successfully`,
   });
 };
-export const getAllHandler:RouteHandlerMethod = async (req , reply) => {
-  const allUsers = await userModel.find().lean()
-  reply.send(allUsers)
-}
+export const getAllHandler: RouteHandlerMethod = async (req, reply) => {
+  const allUsers = await userModel.find().lean();
+  reply.send(allUsers);
+};
+export const getAllAdminHandler: RouteHandlerMethod = async (req, reply) => {
+  const allAdmins = await userModel.find({ isAdmin: true }).lean();
+  reply.send(allAdmins);
+};

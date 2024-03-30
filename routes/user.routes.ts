@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { deleteAccountOptions, myAccountOptions, updateOptions, changeRoleOptions, getAllOptions } from '../schema/user.schema';
-import { changeRoleHandler, deleteAccountHandler, getAllHandler, myAccountHandler, updateHandler } from "../handler/user.handler";
+import { deleteAccountOptions, myAccountOptions, updateOptions, changeRoleOptions, getAllOptions, getAllAdminOptions } from '../schema/user.schema';
+import { changeRoleHandler, deleteAccountHandler, getAllAdminHandler, getAllHandler, myAccountHandler, updateHandler } from "../handler/user.handler";
 import { ChangeRoleParams } from "../interfaces/user.interface";
 
 export default async (fastify: FastifyInstance): Promise<void> => {
@@ -9,4 +9,5 @@ export default async (fastify: FastifyInstance): Promise<void> => {
     fastify.delete('/delete-account' , deleteAccountOptions , deleteAccountHandler)
     fastify.put<{Params: ChangeRoleParams}>('/change-role/:id' , changeRoleOptions , changeRoleHandler)
     fastify.get('/' , getAllOptions , getAllHandler)
+    fastify.get('/admin' , getAllAdminOptions , getAllAdminHandler)
 };

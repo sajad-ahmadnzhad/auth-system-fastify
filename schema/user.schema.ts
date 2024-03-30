@@ -98,6 +98,7 @@ export const getAllOptions: RouteShorthandOptions = {
         items: {
           type: "object",
           required: [
+            '_id',
             "name",
             "username",
             "email",
@@ -106,6 +107,7 @@ export const getAllOptions: RouteShorthandOptions = {
             "profile",
           ],
           properties: {
+            _id: {type: 'string'},
             name: { type: "string" },
             username: { type: "string" },
             email: { type: "string" },
@@ -118,3 +120,4 @@ export const getAllOptions: RouteShorthandOptions = {
     },
   },
 };
+export const getAllAdminOptions: RouteShorthandOptions = getAllOptions
