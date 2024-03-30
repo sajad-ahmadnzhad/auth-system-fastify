@@ -1,14 +1,13 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { preValidationAsyncHookHandler } from "fastify";
 import { ChangeRoleParams } from "../interfaces/user.interface";
 import { isValidObjectId } from "mongoose";
 import httpErrors from "http-errors";
 import userModel from "../models/user.model";
 
-export const changeRoleValidator: any = async (
-  req: FastifyRequest<{ Params: ChangeRoleParams }>,
-  reply: FastifyReply
+export const changeRoleValidator: preValidationAsyncHookHandler = async (
+  req
 ): Promise<void> => {
-  const { id } = req.params;
+  const { id } = req.params as ChangeRoleParams;
   if (!isValidObjectId(id)) {
     throw httpErrors.BadRequest("This user id is not from mongodb");
   }

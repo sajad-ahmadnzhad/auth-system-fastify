@@ -7,9 +7,11 @@ import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from "@fastify/cookie";
 import fastifyBcrypt from "fastify-bcrypt";
 import fastifyMulter from "fastify-multer";
+import fastifyStatic from "@fastify/static";
 config();
 import "./config/db.config";
 import "./interfaces/app.interface";
+import path from "path";
 
 const fastify = Fastify({ logger: true });
 const PORT = Number(process.env.PORT) || 5200;
@@ -21,7 +23,7 @@ const start = async () => {
     fastify.log.error(error);
   }
 };
-
+fastify.register(fastifyStatic, {root: path.join(__dirname , 'public')})
 fastify.register(fastifyMulter.contentParser);
 fastify.register(fastifyJwt, { secret: process.env.JWT_SECRET as string });
 fastify.register(fastifyCookie, { secret: process.env.COOKIE_SECRET });

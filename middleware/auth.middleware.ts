@@ -1,8 +1,8 @@
-import { preHandlerAsyncHookHandler } from "fastify";
+import { FastifyReply, FastifyRequest } from "fastify";
 import { JWTPayload } from "../interfaces/auth.interface";
 import httpErrors from "http-errors";
 import userModel from "../models/user.model";
-export const isAuthMiddleware: preHandlerAsyncHookHandler = async (req, reply) => {
+export default async (req:FastifyRequest, reply:FastifyReply) => {
   const token = req.cookies.accessToken;
   if (!token) {
     throw httpErrors.Forbidden(

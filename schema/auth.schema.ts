@@ -1,5 +1,5 @@
 import { RouteShorthandOptions } from "fastify";
-import { isAuthMiddleware } from "../middleware/auth.middleware";
+import authMiddleware from "../middleware/auth.middleware";
 import {registerValidator} from '../validator/auth.validator'
 import profileUploader from "../utils/uploader/profile.uploader";
 export const registerOptions: RouteShorthandOptions = {
@@ -47,7 +47,7 @@ export const loginOptions: RouteShorthandOptions = {
   },
 } as const;
 export const logoutOptions: RouteShorthandOptions = {
-  preHandler: isAuthMiddleware,
+  preHandler: authMiddleware,
   schema: {
     response: {
       200: {
