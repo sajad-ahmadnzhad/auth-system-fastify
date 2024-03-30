@@ -1,6 +1,5 @@
 import { preValidationHookHandler } from "fastify";
 import { RegisterBody } from "../interfaces/auth.interface";
-import httpErrors from 'http-errors';
 
 export const registerValidator: preValidationHookHandler = (
   req,
@@ -8,10 +7,10 @@ export const registerValidator: preValidationHookHandler = (
   done
 ) => {
   const { password, confirmPassword } = <RegisterBody>req.body;
-
+  const { httpErrors } = req.server;
   if (password !== confirmPassword) {
     done(
-      new httpErrors.BadRequest(
+     new httpErrors.BadRequest(
         "The password value is not equal to the password confirmation"
       )
     );

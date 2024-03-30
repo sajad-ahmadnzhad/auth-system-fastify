@@ -5,13 +5,13 @@ import {
   User,
 } from "../interfaces/user.interface";
 import { isValidObjectId } from "mongoose";
-import httpErrors from "http-errors";
 import userModel from "../models/user.model";
 
 export const changeRoleValidator: preValidationAsyncHookHandler = async (
   req
 ): Promise<void> => {
   const { id } = req.params as ChangeRoleParams;
+  const { httpErrors } = req.server;
   if (!isValidObjectId(id)) {
     throw httpErrors.BadRequest("This user id is not from mongodb");
   }
@@ -28,9 +28,10 @@ export const changeRoleValidator: preValidationAsyncHookHandler = async (
 };
 export const deleteAccountValidator: preValidationAsyncHookHandler = async (
   req
-) => {
+): Promise<void> => {
   const user = <User>req.user;
   const body = <DeleteAccountBody>req.body;
+  const { httpErrors } = req.server;
 
   if (user.isSuperAdmin) {
     throw httpErrors.BadRequest(

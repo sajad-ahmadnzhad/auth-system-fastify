@@ -4,6 +4,7 @@ import httpErrors from "http-errors";
 
 export default async (req: FastifyRequest): Promise<void> => {
   const user = <User>req.user;
+  const {httpErrors} = req.server
   if (!user.isSuperAdmin) {
     throw httpErrors.Forbidden(
       "This path is only active for the owner or super admin"

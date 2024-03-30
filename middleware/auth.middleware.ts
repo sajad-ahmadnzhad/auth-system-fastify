@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { JWTPayload } from "../interfaces/auth.interface";
-import httpErrors from "http-errors";
 import userModel from "../models/user.model";
-export default async (req:FastifyRequest, reply:FastifyReply) => {
+export default async (req: FastifyRequest): Promise<void> => {
   const token = req.cookies.accessToken;
+  const { httpErrors } = req.server;
   if (!token) {
     throw httpErrors.Forbidden(
       "This path is protected. To access it, you must log in first"

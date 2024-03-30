@@ -1,13 +1,12 @@
 import { RouteHandlerMethod } from "fastify";
 import { LoginBody, RegisterBody } from "../interfaces/auth.interface";
 import userModel from "../models/user.model";
-import httpErrors from "http-errors";
 export const registerHandler: RouteHandlerMethod = async (
   req,
   reply
 ): Promise<void> => {
   const body = <RegisterBody>req.body;
-
+  const {httpErrors} = req.server
   const existingUser = await userModel.findOne({
     $or: [{ username: body.username }, { email: body.email }],
   });
@@ -45,6 +44,7 @@ export const registerHandler: RouteHandlerMethod = async (
 };
 export const loginHandler: RouteHandlerMethod = async (req, reply) => {
   const { identifier, password } = <LoginBody>req.body;
+  const {httpErrors} = req.server
   const user = await userModel.findOne({
     $or: [{ username: identifier }, { email: identifier }],
   });
